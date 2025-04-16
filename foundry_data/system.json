@@ -1,0 +1,19 @@
+{
+    "id": "mem-mori",
+    "title": "Memento Mori",
+    "description": "A fan-made Foundry VTT System for Memento Mori by Two Little Mice (2LM)",
+    "version": "0.0.1",
+    "compatibility": {
+        "minimum": 12,
+        "verified": 12
+    },
+    "authors": [{
+        "name": "Grykus762",
+        "url": "TBD",
+        "email": "TBD",
+        "discord": "TBD"
+    }],
+    "url": "Hosted System Repo URL Here",
+    "manifest": "Hosted repo manifest.json",
+    "download": "package download archive.zip"
+}

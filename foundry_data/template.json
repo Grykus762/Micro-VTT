@@ -1,0 +1,93 @@
+{
+    "Actor": {
+        "types":
+        [
+            "character",
+            "npc"
+        ],
+        "templates":
+        {
+            "note": ""
+        }
+    },
+    "character": {
+        "templates": ["notes"],
+        "organs":[
+            {
+                "nerve":{
+                    "slots": 1,
+                    "corrupted": 0
+                },
+                "cerebrum": {
+                    "slots": 1,
+                    "corrupted": 0
+                },
+                "heart": {
+                    "slots": 1,
+                    "corrupted": 0
+                },
+                "viscera": {
+                    "slots": 1,
+                    "corrupted": 0
+                }
+            }
+        ],
+        "blood": {
+            "slots": 3,
+            "corrupted": 1
+        },
+        "name": {
+            "name": "Name",
+            "slots": 2,
+            "corrupted": 0
+        },
+        "giftName": {
+            "description": "",
+            "progress": 0
+        },
+        "stigmata":
+        {
+            "charges": 0,
+            "description": ""
+        },
+        "dream": "",
+        "mark": {
+            "name": "",
+            "keywords": []
+        },
+        "bonds":[
+            {"memory": "",
+            "phrase": ""
+            },
+            {"memory": "",
+            "phrase": ""
+            },
+            {"memory": "",
+            "phrase": ""
+            }
+        ],
+        "giftBonds":
+        {
+            "description": "",
+            "progress": 0
+        },
+        "virtues":[{
+            "description": "",
+            "corrupted": 0
+        },
+        {
+            "description": "",
+            "corrupted": 0
+        },
+        {
+            "description": "",
+            "corrupted": 0
+        }],
+        "giftVirtues":
+        {
+            "description": "",
+            "progress": 0
+        },
+        "equipment": []
+    }
+}
