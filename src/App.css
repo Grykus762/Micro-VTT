@@ -7,21 +7,24 @@
 /* Layout */
 html, body, #root, #main-container
 {
-  height: 100%;
+  height: 99%;
 }
 #main-container
 {
   display: flex;
   font-family: "Montserrat", sans-serif;
+  margin: 5px;
 }
 #char-sheet-container
 {
-  width: 80%;
+  /* max-width: 1530px; */
   background-image: url("./assets/VTT/MM_Char_Sheet_Background.png");
   background-repeat: no-repeat;
-  background-color: #FFFCF6;
+  background-size: clamp(1000px, 1800px, 2000px);
   color: black;
   padding: 0.625rem;
+  margin: 0 auto;
+  flex-grow: 1;
 }
 
 #foundry-sidebar
@@ -30,9 +33,11 @@ html, body, #root, #main-container
   border: 3px solid gray;
   border-radius: 5px;
   margin: 0 1em;
+  margin-right: 0;
   color: black;
-  min-width: 20%;
   padding: 0.625rem;
+  min-width: 20%;
+  flex-grow: 1;
 }
 /* Name and Gift of the Name Layout */
 #name-attribute-container > div
