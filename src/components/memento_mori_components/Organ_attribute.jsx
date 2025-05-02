@@ -4,26 +4,12 @@ import corruptedSlot from "../../assets/VTT/Corrupted_Slot.svg"
 
 export default function Organ_attribute(props)
 {
-    const {organName, description, corruption} = props
-    if(corruption)
-    {
-        return (
+    const {organName, description, slots} = props
+        return (   
             <div>
-            <h2>{organName}</h2>
-            {corruption}
-            <p className="attribute-description">{description}</p>
-        </div>
+                <h2>{organName}</h2>
+                {slots}                
+                <p className="attribute-description">{description}</p>
+            </div>
         )
-
-    }
-    
-    return (   
-        <div>
-            <h2>{organName}</h2>
-            {organName==='Blood'? <img className="img-slot-icon-blood" src={corruptedSlot}/>: <img className="img-slot-icon" src={filledSlot} />}
-            <img className="img-slot-icon" src={unfilledSlot} />
-            <img className="img-slot-icon" src={unfilledSlot} />
-            <p className="attribute-description">{description}</p>
-        </div>
-    )
 }

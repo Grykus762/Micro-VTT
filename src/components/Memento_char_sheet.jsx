@@ -7,46 +7,64 @@ import progressBoxEmpty from "../assets/VTT/Progress_Box_Unfilled.svg"
 import progressDiamond from "../assets/VTT/Progress_Diamond.svg"
 export default function Memento_char_sheet(character)
 {
-    const {name, giftName, bloodCorruption, stigmata, equipment, dream, mark, bonds, giftBonds, virtues, giftVirtues } = character
+    const {name, giftName, blood, nerve, cerebrum, heart, viscera, stigmata, equipment, dream, mark, bonds, giftBonds, virtues, giftVirtues } = character
 
-    const [bloodCorruptionState, setBloodCorruptionState]=useState(1)
+    /* States */
+    const [charName, setCharName] = useState(name)
+    const [bloodInfo, setbloodInfo] = useState(blood)
+    const [nerveInfo, setNerveInfo] = useState(nerve)
+    const [cerebrumInfo, setCerebrumInfo] = useState(cerebrum)
+    const [heartInfo, setHeartInfo] = useState(heart)
+    const [visceraInfo, setVisceraInfo] = useState(viscera)
 
-    function displayBloodCorruption(corruptedSlots)
+    const[bondsInfo, setBondsInfo] = useState(bonds)
+    const[virtuesInfo, setVirtuesInfo] = useState(virtues)
+
+    function displaySlots(corruptedSlots, filledSlots, maximumSlots = 3)
     {
         /**
+         * 
          * I need to display a number of filled slots, or corrupted slots based on the imported values.
          * 
-         * Important: Blood always has 3 slots and one is ALWAYs corrupted. I may not need a "slots" attribute at all. When Blood is fully corrupted (corruption => 3), set corrupted slots to 1, gain 1 Drifter Corruption, then continue adding corruption until the receiving trauma is set to zero. ALWAYS depict blood corruption from left to right
-         
-         * @param {integer} corruptedSlotValue - Corrupted Slot value can never be more than 2 or less than 1.
+         * Organs can have a maximum of three filled slots. Unlike blood, organs can have unfilled slots that are determined by character creation.
+         * @param {integer} corruptedSlots - The number of slots that have been corrupted
+         * @param {integer} filledSlots - The number of active and filled slots the character has
+         * @const {number} maxSlots - The maximum number of slots allowed on an organ. This value is always 3
          * @returns {jsx}  JSX displaying HTML for the correct number of corrupted  and uncorrupted blood slots
          * 
          * Steps
-         * - Given the number corrupted slots, display a number of images for corrupted slots.
-         * - calculate the remaining number of slots that are uncorrupted
-         * - show an uncorrupted image for each number of remaining slots
+         * - Given the number of corrupted slots, first generate the number of corrupt slots to be displayed
+         * - calculate the remaining number of slots that are filled but uncorrupted and generate the images for those slots
+         * For all other slots, show an image of an unfilled slot
          */
-
-        const corrupted = corruptedSlots
-        const corruptedImage =  <img className="img-slot-icon" src={corruptedSlot} />
-        const uncorruptedImage = <img className="img-slot-icon" src={filledSlot} />
-        let bloodSlots = []
-        let filledToShow = 3 - corrupted
-        if(filledToShow <= 0)
-        {
-            console.error("Blood cannot have less than 2 corruption")
-        }
         
-        for(let i=1; i<=corrupted; i++ )
+        const maxSlots = maximumSlots
+        const emptySlots = maxSlots - corruptedSlots - filledSlots
+        if(emptySlots < 0)
         {
-            bloodSlots.push(corruptedImage) 
+            console.error("An error ocurred. The number of slots cannot be below zero")
         }
 
-        for(let i=1; i<=filledToShow; i++)
+        let slots = []
+        for (let i =1; i<=corruptedSlots;i++)
         {
-            bloodSlots.push(uncorruptedImage)
+            slots.push(<img className="img-slot-icon" src={corruptedSlot} />)
         }
-        return bloodSlots
+
+        for (let i=1; i<=filledSlots;i++)
+        {
+            slots.push(<img className="img-slot-icon" src={filledSlot} />)
+        }
+
+        if(emptySlots)
+        {
+            for (let i=1; i<=emptySlots; i++)
+            {
+                slots.push(<img className="img-slot-icon" src={unfilledSlot} />)
+            }
+        }
+        return slots
+
     }
 
 return (
@@ -56,8 +74,7 @@ return (
             <div id='name-attribute-container' className="flex align-baseline">
                 <div>
                     <h2 id="name-header" className="header">Name</h2>
-                    <img className="img-slot-icon" src={filledSlot} alt="A filled slot without corruption for the character's name" />
-                    <img className="img-slot-icon" src={filledSlot} alt="A filled slot without corruption for the character's name" />
+                    {displaySlots(charName.corrupted, charName.slots,charName.maxSlots)}
                 </div>
                 <div id="char-name" className="header">
                     <h3>{name.name}</h3>
@@ -82,7 +99,7 @@ return (
                 <Organ_attribute 
                     variant
                     organName="Blood"
-                    corruption={displayBloodCorruption(bloodCorruption)}
+                    slots={displaySlots(bloodInfo.corrupted, bloodInfo.slots, bloodInfo.maxSlots)}
                     description="Your overall physical and mental condition"
                 />
             </div>
@@ -90,20 +107,24 @@ return (
                 <div className="organs">
                     <Organ_attribute
                         organName="Nerves"
+                        slots={displaySlots(nerveInfo.corrupted, nerveInfo.slots)}
                         description="Instinct above all"
                     />
                     <Organ_attribute
                         organName="Cerebrum"
+                        slots={displaySlots(cerebrumInfo.corrupted, cerebrumInfo.slots)}
                         description="Reason at any cost"
                     />
                 </div>
                 <div className="organs">
                     <Organ_attribute
                         organName="Heart"
+                        slots={displaySlots(heartInfo.corrupted, heartInfo.slots)}
                         description="A life devoted to others"
                     />
                     <Organ_attribute
                         organName="Viscera"
+                        slots={displaySlots(visceraInfo.corrupted, visceraInfo.slots)}
                         description="A life of self-interest"
                     />
                 </div>
@@ -135,20 +156,17 @@ return (
             <div id="bonds-container" className="flex">
                 
                 <div id="bond-1">
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <img className="img-slot-icon" src={filledSlot} />
+                    {displaySlots(bondsInfo[0].corrupted, bondsInfo[0].slots, bondsInfo[0].maxSlots)}
                     <p>{bonds[0].memory}</p>
                     <p>{bonds[0].phrase}</p>
                 </div>
                 <div id="bond-2">
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <img className="img-slot-icon" src={filledSlot} />
+                    {displaySlots(bondsInfo[1].corrupted, bondsInfo[1].slots, bondsInfo[1].maxSlots)}  
                     <p>{bonds[1].memory}</p>
                     <p>{bonds[1].phrase}</p>
                 </div>
                 <div id="bond-3">
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <img className="img-slot-icon" src={filledSlot} />
+                    {displaySlots(bondsInfo[2].corrupted, bondsInfo[2].slots, bondsInfo[2].maxSlots)}
                     <p>{bonds[2].memory}</p>
                     <p>{bonds[2].phrase}</p>
                 </div>
@@ -168,19 +186,16 @@ return (
             <h2 className="header">Virtues</h2>
             <div id="virtues-container">
                 <div id="virtue-1">
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <p>{virtues[0].description}</p>
+                    {displaySlots(virtuesInfo[0].corrupted, virtuesInfo[0].slots, virtuesInfo[0].maxSlots)}
+                    <p>{virtuesInfo[0].description}</p>
                 </div>
                 <div id="virtue-2">
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <p>{virtues[1].description}</p>
+                    {displaySlots(virtuesInfo[1].corrupted, virtuesInfo[1].slots, virtuesInfo[1].maxSlots)}
+                    <p>{virtuesInfo[0].description}</p>
                 </div>
                 <div id="virtue-3">
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <img className="img-slot-icon" src={filledSlot} />
-                    <p>{virtues[2].description}</p>
+                    {displaySlots(virtuesInfo[2].corrupted, virtuesInfo[2].slots, virtuesInfo[2].maxSlots)}
+                    <p>{virtuesInfo[0].description}</p>
                 </div>
             </div>
             <div id="gift-virtues-container">

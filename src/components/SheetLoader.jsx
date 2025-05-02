@@ -8,33 +8,37 @@ export default function SheetLoader()
         "name": {
             "name": "Name",
             "slots": 2,
+            "maxSlots": 2,
             "corrupted": 0
         },
         "giftName": {
             "description": "This Gift has not been unlocked yet",
             "progress": 0
         },
-        "bloodCorruption": 1,
-        "organs":[
-            {
-                "nerve":{
-                    "slots": 1,
-                    "corrupted": 0
-                },
-                "cerebrum": {
-                    "slots": 1,
-                    "corrupted": 0
-                },
-                "heart": {
-                    "slots": 1,
-                    "corrupted": 0
-                },
-                "viscera": {
-                    "slots": 1,
-                    "corrupted": 0
+        "blood": {
+            "slots": 2,
+            "maxSlots": 3,
+            "corrupted": 1
+        },
+        "organs":{
+            "nerve":{
+                "slots": 1,
+                "corrupted": 0
+            },
+            "cerebrum": {
+                "slots": 1,
+                "corrupted": 0
+            },
+            "heart": {
+                "slots": 1,
+                "corrupted": 0
+            },
+            
+            "viscera": {
+                "slots": 1,
+                "corrupted": 0
                 }
-            }
-        ],
+        },
         "stigmata":
         {
             "charges": 0,
@@ -48,13 +52,22 @@ export default function SheetLoader()
         },
         "bonds":[
             {"memory": "This memory has not been set",
-            "phrase": "First you need a memory"
+            "phrase": "First you need a memory",
+            "slots": 2,
+            "maxSlots": 2,
+            "corrupted": 0
             },
             {"memory": "This memory has not been set",
-            "phrase": "First you need a memory"
+            "phrase": "First you need a memory",
+            "slots": 2,
+            "maxSlots": 2,
+            "corrupted": 0
             },
             {"memory": "This memory has not been set",
-            "phrase": "First you need a memory"
+            "phrase": "First you need a memory",
+            "slots": 2,
+            "maxSlots": 2,
+            "corrupted": 0
             }
         ],
         "giftBonds":
@@ -64,31 +77,41 @@ export default function SheetLoader()
         },
         "virtues":[{
             "description": "This virtue has not been assigned yet",
+            "slots": 2,
+            "maxSlots": 2,
             "corrupted": 0
         },
         {
             "description": "This virtue has not been assigned yet",
+            "slots": 2,
+            "maxSlots": 2,
             "corrupted": 0
         },
         {
             "description": "This virtue has not been assigned yet",
+            "slots": 2,
+            "maxSlots": 2,
             "corrupted": 0
         }],
         "giftVirtues":
         {
             "description": "This Gift has not been unlocked yet",
-            "progress": 0
+            "slots": 2,
+            "maxSlots": 2,
+            "corrupted": 0
         },
       }
       const [memMoriChar, setMemMoriChar] = useState(defaultChar)
-
     return (
         <div id="main-container">
             <Memento_char_sheet
             name={memMoriChar.name}
             giftName={memMoriChar.giftName}
-            bloodCorruption = {memMoriChar.bloodCorruption}
-            organs = {memMoriChar.organs}
+            blood = {memMoriChar.blood}
+            nerve = {memMoriChar.organs.nerve}
+            cerebrum = {memMoriChar.organs.cerebrum}
+            heart = {memMoriChar.organs.heart}
+            viscera = {memMoriChar.organs.viscera}
             stigmata = {memMoriChar.stigmata}
             equipment = {memMoriChar.equipment}
             dream = {memMoriChar.dream}
