@@ -16,9 +16,8 @@ export default function Memento_char_sheet(character)
     const [cerebrumInfo, setCerebrumInfo] = useState(cerebrum)
     const [heartInfo, setHeartInfo] = useState(heart)
     const [visceraInfo, setVisceraInfo] = useState(viscera)
-
-    const[bondsInfo, setBondsInfo] = useState(bonds)
-    const[virtuesInfo, setVirtuesInfo] = useState(virtues)
+    const [bondsInfo, setBondsInfo] = useState(bonds)
+    const [virtuesInfo, setVirtuesInfo] = useState(virtues)
 
     function displaySlots(corruptedSlots, filledSlots, maximumSlots = 3)
     {
@@ -26,7 +25,7 @@ export default function Memento_char_sheet(character)
          * 
          * I need to display a number of filled slots, or corrupted slots based on the imported values.
          * 
-         * Organs can have a maximum of three filled slots. Unlike blood, organs can have unfilled slots that are determined by character creation.
+         * Organs can have a maximum of three filled slots. Unlike blood, organs can have unfilled slots that are determined by character creation. Blood slots must ALWAYS have a minimum of 1 corrupted slots, and will never have all three slots corrupted. When the third slot is corrupted, the corruption gets reset back to 1 corruption slot, and the player gets corruption in either their name, bonds, virtues, or organs
          * @param {integer} corruptedSlots - The number of slots that have been corrupted
          * @param {integer} filledSlots - The number of active and filled slots the character has
          * @const {number} maxSlots - The maximum number of slots allowed on an organ. This value is always 3
@@ -64,7 +63,6 @@ export default function Memento_char_sheet(character)
             }
         }
         return slots
-
     }
 
 return (
@@ -212,5 +210,4 @@ return (
         
     </div>
 )
-
 }
