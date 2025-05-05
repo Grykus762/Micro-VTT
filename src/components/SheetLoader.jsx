@@ -4,7 +4,7 @@ import Memento_char_sheet from "./Memento_char_sheet";
 
 export default function SheetLoader()
 {
-    const defaultChar =  {
+    const blankCharacter =  {
         "name": {
             "name": "Name",
             "slots": 2,
@@ -108,28 +108,46 @@ export default function SheetLoader()
             "corrupted": 0
         },
       }
-      const [memMoriChar, setMemMoriChar] = useState(defaultChar)
+      const [memMoriChar, setMemMoriChar] = useState(blankCharacter)
+      const [navigateToSheet, setNavigateToSheet] = useState(false)
+
+      const sheet= <div id="main-container">
+        <Memento_char_sheet
+        name={memMoriChar.name}
+        giftName={memMoriChar.giftName}
+        organs={memMoriChar.organs}
+        blood = {memMoriChar.blood}
+        nerve = {memMoriChar.organs.nerve}
+        cerebrum = {memMoriChar.organs.cerebrum}
+        heart = {memMoriChar.organs.heart}
+        viscera = {memMoriChar.organs.viscera}
+        stigmata = {memMoriChar.stigmata}
+        equipment = {memMoriChar.equipment}
+        dream = {memMoriChar.dream}
+        mark = {memMoriChar.mark}
+        bonds = {memMoriChar.bonds}
+        giftBonds = {memMoriChar.giftBonds}
+        virtues = {memMoriChar.virtues}
+        giftVirtues = {memMoriChar.giftVirtues}
+        />
+        <Foundry_sidebar />
+      </div>
+
+      const characterCreatorForm = <>
+       <h2>Do you want to create a character or use a blank character sheet?</h2>
+       <button>Create Character</button>
+       <button onClick={()=>handleClick()}>Take me to a blank character sheet</button>
+      </>
+
+      function handleClick()
+      {
+        setNavigateToSheet(true)
+      }
+
+      const display = navigateToSheet? sheet: characterCreatorForm
     return (
-        <div id="main-container">
-            <Memento_char_sheet
-            name={memMoriChar.name}
-            giftName={memMoriChar.giftName}
-            organs={memMoriChar.organs}
-            blood = {memMoriChar.blood}
-            nerve = {memMoriChar.organs.nerve}
-            cerebrum = {memMoriChar.organs.cerebrum}
-            heart = {memMoriChar.organs.heart}
-            viscera = {memMoriChar.organs.viscera}
-            stigmata = {memMoriChar.stigmata}
-            equipment = {memMoriChar.equipment}
-            dream = {memMoriChar.dream}
-            mark = {memMoriChar.mark}
-            bonds = {memMoriChar.bonds}
-            giftBonds = {memMoriChar.giftBonds}
-            virtues = {memMoriChar.virtues}
-            giftVirtues = {memMoriChar.giftVirtues}
-             />
-            <Foundry_sidebar />
-        </div>
+        <>
+           {display}
+        </>
     )
 }

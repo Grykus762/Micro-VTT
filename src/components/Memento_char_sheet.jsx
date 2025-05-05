@@ -22,6 +22,7 @@ export default function Memento_char_sheet(character)
 
     const charOrgans=organs.map(organ=> <Organ_attribute
         organName={organ.organName}
+        key={organ.organName}
         slots={displaySlots( organ.corruption,organ.slots)}
         description={organ.description}
         handleClick={()=>handleSlotClick(bloodInfo.corrupted)}
