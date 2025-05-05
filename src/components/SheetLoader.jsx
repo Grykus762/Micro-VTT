@@ -137,11 +137,33 @@ export default function SheetLoader()
        <h2>Do you want to create a character or use a blank character sheet?</h2>
        <button>Create Character</button>
        <button onClick={()=>handleClick()}>Take me to a blank character sheet</button>
+       <form>
+            <label for="characterName">Character Name</label>
+            <input type='text' id="characterName" name='characterName' />
+            <input type="submit" onClick={handleSubmit} value="Save Character Data"/>
+            <p>Set Dream</p>
+            <p>Set Mark</p>
+            <p>Set character Organ Values</p>
+            <p>Organ Points Spent: 0</p>
+            <p>Organ Points Remaining: 3</p>
+            <p>Set Bond 1 Memory</p>
+            <p>Set Bond 1 Key-Phrase</p>
+            <p>Set Virtue 1 Memory</p>
+            <p>Set Virtue 1 Key-Phrase</p>
+            <p>Set Equipment</p>
+       </form>
       </>
 
       function handleClick()
       {
         setNavigateToSheet(true)
+      }
+
+      function handleSubmit(event)
+      {
+        console.log("submitted")
+        console.log(event)
+        event.preventDefault()
       }
 
       const display = navigateToSheet? sheet: characterCreatorForm
