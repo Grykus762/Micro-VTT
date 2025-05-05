@@ -5,9 +5,10 @@ import unfilledSlot from "../assets/VTT/Unfilled_Slot.svg"
 import corruptedSlot from "../assets/VTT/Corrupted_Slot.svg"
 import progressBoxEmpty from "../assets/VTT/Progress_Box_Unfilled.svg"
 import progressDiamond from "../assets/VTT/Progress_Diamond.svg"
+
 export default function Memento_char_sheet(character)
 {
-    const {name, giftName, blood, nerve, cerebrum, heart, viscera, stigmata, equipment, dream, mark, bonds, giftBonds, virtues, giftVirtues } = character
+    const {name, giftName, organs, blood, nerve, cerebrum, heart, viscera, stigmata, equipment, dream, mark, bonds, giftBonds, virtues, giftVirtues } = character
 
     /* States */
     const [charName, setCharName] = useState(name)
@@ -19,6 +20,27 @@ export default function Memento_char_sheet(character)
     const [bondsInfo, setBondsInfo] = useState(bonds)
     const [virtuesInfo, setVirtuesInfo] = useState(virtues)
 
+    const charOrgans=organs.map(organ=> <Organ_attribute
+        organName={organ.organName}
+        slots={displaySlots( organ.corruption,organ.slots)}
+        description={organ.description}
+        handleClick={()=>handleSlotClick(bloodInfo.corrupted)}
+        diceRoll={()=>handleDiceRoll()}
+         /> )
+    const charBlood = <Organ_attribute 
+        variant
+        organName="Blood"
+        slotInfo={bloodInfo}
+        displaySlots={()=>displaySlots(bloodInfo.corrupted, bloodInfo.slots, bloodInfo.maxSlots)}
+        slots={displaySlots(bloodInfo.corrupted, bloodInfo.slots, bloodInfo.maxSlots)}
+        description="Your overall physical and mental condition"
+        handleClick={()=>handleSlotClick(bloodInfo.corrupted)}
+        diceRoll={()=>handleDiceRoll()}
+    />
+
+    /**
+     * Functions
+     */
     function displaySlots(corruptedSlots, filledSlots, maximumSlots = 3)
     {
         /**
@@ -65,6 +87,19 @@ export default function Memento_char_sheet(character)
         return slots
     }
 
+    function handleSlotClick(prop)
+    {
+        /**
+         * When clicked, console.log the corrupted slots and slots of something
+         */
+
+        console.log("Change Slot type!")
+    }
+
+    function handleDiceRoll()
+    {
+        console.log("Roll Dice!")
+    }
 return (
     <div id="char-sheet-container" className="flex">
         {/* First Column */}
@@ -94,38 +129,10 @@ return (
                 </div>
             </div>
             <div id="blood-attribute">
-                <Organ_attribute 
-                    variant
-                    organName="Blood"
-                    slots={displaySlots(bloodInfo.corrupted, bloodInfo.slots, bloodInfo.maxSlots)}
-                    description="Your overall physical and mental condition"
-                />
+                {charBlood}
             </div>
             <div id="organ-attribute-container">
-                <div className="organs">
-                    <Organ_attribute
-                        organName="Nerves"
-                        slots={displaySlots(nerveInfo.corrupted, nerveInfo.slots)}
-                        description="Instinct above all"
-                    />
-                    <Organ_attribute
-                        organName="Cerebrum"
-                        slots={displaySlots(cerebrumInfo.corrupted, cerebrumInfo.slots)}
-                        description="Reason at any cost"
-                    />
-                </div>
-                <div className="organs">
-                    <Organ_attribute
-                        organName="Heart"
-                        slots={displaySlots(heartInfo.corrupted, heartInfo.slots)}
-                        description="A life devoted to others"
-                    />
-                    <Organ_attribute
-                        organName="Viscera"
-                        slots={displaySlots(visceraInfo.corrupted, visceraInfo.slots)}
-                        description="A life of self-interest"
-                    />
-                </div>
+                {charOrgans}
             </div>
             <div>
                 <h2 id="stigmata-header">Stigmata</h2>

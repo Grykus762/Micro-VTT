@@ -20,25 +20,32 @@ export default function SheetLoader()
             "maxSlots": 3,
             "corrupted": 1
         },
-        "organs":{
-            "nerve":{
+        "organs":[
+            {
+                "organName": "Nerve",
                 "slots": 1,
-                "corrupted": 0
+                "corruption": 0,
+                "description":"Instinct above all"
             },
-            "cerebrum": {
+            {
+                "organName": "Cerebrum",
                 "slots": 1,
-                "corrupted": 0
+                "corruption": 0,
+                "description": "Reason at any cost"
             },
-            "heart": {
+            {
+                "organName": "Heart",
                 "slots": 1,
-                "corrupted": 0
+                "corruption": 0,
+                "description": "A life devoted to others"
             },
-            
-            "viscera": {
+            {
+                "organName": "Viscera",
                 "slots": 1,
-                "corrupted": 0
-                }
-        },
+                "corruption": 0,
+                "description": "A life of self-interest"
+            },           
+        ],
         "stigmata":
         {
             "charges": 0,
@@ -107,6 +114,7 @@ export default function SheetLoader()
             <Memento_char_sheet
             name={memMoriChar.name}
             giftName={memMoriChar.giftName}
+            organs={memMoriChar.organs}
             blood = {memMoriChar.blood}
             nerve = {memMoriChar.organs.nerve}
             cerebrum = {memMoriChar.organs.cerebrum}

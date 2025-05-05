@@ -61,22 +61,8 @@ html, body, #root, #main-container
 #organ-attribute-container
 {
   display: flex;
-  flex-direction: column;
-}
-.organs
-{
-  display: flex;
-  max-width: 60%;
-}
-
-.organs > div, #blood-attribute
-{
-  margin: 0 1rem;
-}
-
-.organs > div:last-child
-{
-  margin-left: auto;
+  margin-right: 1rem;
+  gap: 1.5rem;
 }
 
 /* Gift of the Bonds and Gift of the Virtues Containers */
@@ -94,6 +80,11 @@ html, body, #root, #main-container
 #gift-bonds-container
 {
   margin: 1rem 0;
+}
+
+.organ-header-container
+{
+  margin: 0.4rem 0;
 }
 /* Utility */
 .flex-col
@@ -120,6 +111,17 @@ html, body, #root, #main-container
 .attribute-description
 {
   color: #808080;
+}
+
+.organ-header
+{
+  display: inline;
+}
+
+.organ-header:hover
+{
+  cursor: pointer;
+  text-shadow: 1px 1px 10px red;
 }
 
 /* media */

@@ -4,11 +4,16 @@ import corruptedSlot from "../../assets/VTT/Corrupted_Slot.svg"
 
 export default function Organ_attribute(props)
 {
-    const {organName, description, slots} = props
+    const {organName, description, slotInfo, displaySlots, slots, handleClick, diceRoll } = props
+
         return (   
             <div>
-                <h2>{organName}</h2>
-                {slots}                
+                <div onClick={diceRoll} className="organ-header-container">
+                    <h2 className="organ-header">{organName}</h2>
+                </div>
+                <div onClick={handleClick}>
+                    {slots}
+                </div>
                 <p className="attribute-description">{description}</p>
             </div>
         )
