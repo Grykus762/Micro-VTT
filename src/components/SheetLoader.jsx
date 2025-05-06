@@ -137,6 +137,7 @@ export default function SheetLoader()
         <Foundry_sidebar />
       </div>
       const organPointsMax = 3;
+      const startingOrganSlots = 1
       let organPointsSpent = 0
       const characterCreatorForm = <>
        <h2>Do you want to create a character or use a blank character sheet?</h2>
@@ -228,20 +229,39 @@ export default function SheetLoader()
         const charCerebrumForm = formData.get("characterCerebrum")
         const charHeartForm = formData.get("characterHeart")
         const charVisceraForm = formData.get("characterViscera")
-        console.log("Character Name",charNameForm)
-        console.log("Character Epithet",charEpithetForm)
-        console.log("Character Dream",charDreamForm)
-        console.log("Character charNerves",charNervesForm)
-        console.log("Character charCerebrum",charCerebrumForm)
-        console.log("Character charHeart",charHeartForm)
-        console.log("Character charViscera",charVisceraForm)
+
         const characterData = blankCharacter
         characterData.name.name = charNameForm
         characterData.name.epithet = charEpithetForm
         characterData.dream = charDreamForm
-        console.log(characterData)
-        console.log("CharacterName",characterData.name)
-        console.log("characterEpithet ",characterData.name.epithet)
+        //loop through organs
+        characterData.organs.forEach(data=>
+            {
+                if (data.organName === "Nerve")
+                {
+                    console.log(typeof charNervesForm)
+                    const charNervesValue = parseInt(charNervesForm)
+                    data.slots = (charNervesValue + startingOrganSlots)
+                }
+
+                else if (data.organName === "Cerebrum")
+                {
+                    const charCerebrumValue = parseInt(charCerebrumForm)
+                    data.slots = (charCerebrumValue + startingOrganSlots)
+                }
+                else if (data.organName === "Heart")
+                {
+                    const charHeartValue = parseInt(charHeartForm)
+                    data.slots = (charHeartValue + startingOrganSlots)
+                }
+                else
+                {
+                    const charVisceraValue = parseInt(charVisceraForm)
+                    data.slots = (charVisceraValue + startingOrganSlots)
+                }
+            })
+            console.log(characterData)
+        setMemMoriChar(characterData)
 
         /**
          * Might need Lodash _set to update nested properties
