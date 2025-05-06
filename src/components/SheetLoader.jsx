@@ -4,6 +4,9 @@ import Memento_char_sheet from "./Memento_char_sheet";
 
 export default function SheetLoader()
 {
+    /**
+     * Set up a blank character object that will hold the data for a brand-new character
+     */
     const blankCharacter =  {
         "name": {
             "name": "Name",
@@ -132,24 +135,77 @@ export default function SheetLoader()
         />
         <Foundry_sidebar />
       </div>
-
+      const organPointsMax = 3;
+      let organPointsSpent = 0
       const characterCreatorForm = <>
        <h2>Do you want to create a character or use a blank character sheet?</h2>
-       <button>Create Character</button>
        <button onClick={()=>handleClick()}>Take me to a blank character sheet</button>
-       <form>
-            <label for="characterName">Character Name</label>
-            <input type='text' id="characterName" name='characterName' />
-            <input type="submit" onClick={handleSubmit} value="Save Character Data"/>
-            <p>Set Dream</p>
-            <p>Set Mark</p>
-            <p>Set character Organ Values</p>
-            <p>Organ Points Spent: 0</p>
-            <p>Organ Points Remaining: 3</p>
-            <p>Set Bond 1 Memory</p>
-            <p>Set Bond 1 Key-Phrase</p>
-            <p>Set Virtue 1 Memory</p>
-            <p>Set Virtue 1 Key-Phrase</p>
+       <form action={createCharacter}>
+            <input type="submit" value="Create Character"/>
+            <label htmlFor="characterName">Character Name/ first name</label>
+            <input type='text' id="characterName" name='characterName' placeholder="Annie" />
+
+            <label htmlFor="characterEpithet">Character's Epithet</label>
+            <input type="text" id="characterEpithet" name='characterEpithet' placeholder="the Fleeting Shadow" />
+
+            <label htmlFor="characterDream">Character's Dream</label>
+            <textarea id="characterDream" name='characterDream' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era "></textarea>
+
+            <label htmlFor="characterMark">Character's Mark - This needs to be radial</label>
+            <input type="text" id="characterMark" name='characterMark' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era " />
+            
+            <h2>Set Organ Values</h2>
+            <h3>Organ Points Spent: {organPointsSpent}</h3>
+            <h3>Organ Points Remaining: {organPointsMax-organPointsSpent}</h3>
+            <h3>Nerves</h3>
+            <label htmlFor='characterNerves'>Nerves Attribute Value</label>
+            <input type="number" id="characterNerves" name="characterNerves" min="0" max="3" defaultValue={0} />
+            
+            <h3>Cerebrum</h3>
+            <label htmlFor='characterCerebrum'>Cerebrum Attribute Value</label>
+            <input type="number" id="characterCerebrum" name="characterCerebrum" min="0" max="3" defaultValue={0}/>
+
+            <h3>Heart</h3>
+            <label htmlFor='characterHeart'>Heart Attribute Value</label>
+            <input type="number" id="characterHeart" name="characterHeart" min="0" max="3" defaultValue={0}/>
+
+            <h3>Viscera</h3>
+            <label htmlFor='characterViscera'>Viscera Attribute Value</label>
+            <input type="number" id="characterViscera" name="characterViscera" min="0" max="3" defaultValue={0} />
+            
+            <h3>Bonds</h3>
+            <p>Bond example:</p>
+            <p>Bond Memory: "My trusty needle"</p>
+            <p>Bond Key-phrase: "there's nothing I can't mend</p>
+
+            <label htmlFor='charBondMemory1'>Bond Slot 1 - Memory</label>
+            <input type="textbox" id="charBondMemory1" name="charBondMemory1" />
+
+            <label htmlFor='charKeyPhrase1'>Bond Slot 1 - Key-Phrase</label>
+            <input type="textbox" id="charKeyPhrase1" name="charKeyPhrase1" />
+
+            <label htmlFor='charBondMemory2'>Bond Slot 2 - Memory</label>
+            <input type="textbox" id="charBondMemory2" name="charBondMemory2" />
+
+            <label htmlFor='charKeyPhrase2'>Bond Slot 2 - Key-Phrase</label>
+            <input type="textbox" id="charKeyPhrase2" name="charKeyPhrase2" />
+
+            <label htmlFor='charBondMemory3'>Bond Slot 3 - Memory</label>
+            <input type="textbox" id="charBondMemory3" name="charBondMemory3" />
+
+            <label htmlFor='charKeyPhrase3'>Bond Slot 3 - Key-Phrase</label>
+            <input type="textbox" id="charKeyPhrase3" name="charKeyPhrase3" />
+
+            <h3>Virtues</h3>
+            <label htmlFor='charVirtue1'>Virtue 1</label>
+            <input type="textbox" id="charVirtue1" name="charVirtue1" />
+
+            <label htmlFor='charVirtue2'>Virtue 2</label>
+            <input type="textbox" id="charVirtue2" name="charVirtue2" />
+
+            <label htmlFor='charVirtue3'>Virtue 3</label>
+            <input type="textbox" id="charVirtue3" name="charVirtue3" />
+
             <p>Set Equipment</p>
        </form>
       </>
@@ -159,11 +215,37 @@ export default function SheetLoader()
         setNavigateToSheet(true)
       }
 
-      function handleSubmit(event)
+      function createCharacter(formData)
       {
         console.log("submitted")
-        console.log(event)
-        event.preventDefault()
+        console.log(formData)
+    
+        const charNameForm = formData.get("characterName")
+        const charEpithetForm = formData.get("characterEpithet")
+        const charDreamForm = formData.get("characterDream")
+        const charNervesForm = formData.get("characterNerves")
+        const charCerebrumForm = formData.get("characterCerebrum")
+        const charHeartForm = formData.get("characterHeart")
+        const charVisceraForm = formData.get("characterViscera")
+        console.log("Character Name",charNameForm)
+        console.log("Character Epithet",charEpithetForm)
+        console.log("Character Dream",charDreamForm)
+        console.log("Character charNerves",charNervesForm)
+        console.log("Character charCerebrum",charCerebrumForm)
+        console.log("Character charHeart",charHeartForm)
+        console.log("Character charViscera",charVisceraForm)
+        const characterData = {blankCharacter,"name.name": charNameForm}
+        console.log(characterData)
+        console.log("CharacterName",characterData.name)
+
+        /**
+         * Might need Lodash _set to update nested properties
+         * 
+         * Idea: Set state at the top of the document with default values
+         * - create the blank character object with values represented by the initial state
+         * - when submitting the form, update all of the state values to the new values from the User's inputs
+         * - Pass the state down to the children to render on the character sheet
+         */
       }
 
       const display = navigateToSheet? sheet: characterCreatorForm
