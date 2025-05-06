@@ -10,6 +10,7 @@ export default function SheetLoader()
     const blankCharacter =  {
         "name": {
             "name": "Name",
+            "epithet": "Epithet has not been set",
             "slots": 2,
             "maxSlots": 2,
             "corrupted": 0
@@ -234,9 +235,13 @@ export default function SheetLoader()
         console.log("Character charCerebrum",charCerebrumForm)
         console.log("Character charHeart",charHeartForm)
         console.log("Character charViscera",charVisceraForm)
-        const characterData = {blankCharacter,"name.name": charNameForm}
+        const characterData = blankCharacter
+        characterData.name.name = charNameForm
+        characterData.name.epithet = charEpithetForm
+        characterData.dream = charDreamForm
         console.log(characterData)
         console.log("CharacterName",characterData.name)
+        console.log("characterEpithet ",characterData.name.epithet)
 
         /**
          * Might need Lodash _set to update nested properties
