@@ -19,6 +19,8 @@ export default function Memento_char_sheet(character)
     const [visceraInfo, setVisceraInfo] = useState(viscera)
     const [bondsInfo, setBondsInfo] = useState(bonds)
     const [virtuesInfo, setVirtuesInfo] = useState(virtues)
+    
+    const displaySheet = character.display
 
     const charOrgans=organs.map(organ=> <Organ_attribute
         organName={organ.organName}
@@ -101,10 +103,12 @@ export default function Memento_char_sheet(character)
     {
         console.log("Roll Dice!")
     }
+
 return (
     <div id="char-sheet-container" className="flex">
         {/* First Column */}
         <div>
+            <button onClick={character.display}>Go Back</button>
             <div id='name-attribute-container' className="flex align-baseline">
                 <div>
                     <h2 id="name-header" className="header">Name</h2>

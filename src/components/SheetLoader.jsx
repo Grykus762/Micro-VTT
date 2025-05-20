@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Foundry_sidebar from "./Foundry_sidebar";
 import Memento_char_sheet from "./Memento_char_sheet";
+import '../Sheetloader.css'
 
 export default function SheetLoader()
 {
@@ -115,6 +116,9 @@ export default function SheetLoader()
       const [memMoriChar, setMemMoriChar] = useState(blankCharacter)
       const [navigateToSheet, setNavigateToSheet] = useState(false)
 
+      const characterDataExists = JSON.parse(localStorage.getItem("characterExists"))
+      console.log("Character Data Exists Boolean: ", characterDataExists)
+
       const sheet= <div id="main-container">
         <Memento_char_sheet
         name={memMoriChar.name}
@@ -133,70 +137,100 @@ export default function SheetLoader()
         giftBonds = {memMoriChar.giftBonds}
         virtues = {memMoriChar.virtues}
         giftVirtues = {memMoriChar.giftVirtues}
+        display = {returnToForm}
         />
         <Foundry_sidebar />
       </div>
       const organPointsMax = 3;
       const startingOrganSlots = 1
       let organPointsSpent = 0
-      const characterCreatorForm = <>
-       <h2>Do you want to create a character or use a blank character sheet?</h2>
-       <button onClick={()=>handleClick()}>Take me to a blank character sheet</button>
+      const characterCreatorForm = <div id='character-creation-form'>
+       <button onClick={()=>handleClick()}>Display Sheet</button>
        <form action={createCharacter}>
-            <input type="submit" value="Create Character"/>
-            <label htmlFor="characterName">Character Name/ first name</label>
-            <input type='text' id="characterName" name='characterName' placeholder="Annie" />
-
-            <label htmlFor="characterEpithet">Character's Epithet</label>
-            <input type="text" id="characterEpithet" name='characterEpithet' placeholder="the Fleeting Shadow" />
-
-            <label htmlFor="characterDream">Character's Dream</label>
-            <textarea id="characterDream" name='characterDream' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era "></textarea>
-
-            <label htmlFor="characterMark">Character's Mark - This needs to be radial</label>
-            <input type="text" id="characterMark" name='characterMark' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era " />
+            <input type="submit" value="Save Character Data"/>
+            <h2>Character Name Information</h2>
+            <div className='attribute-container'>
+                <div className='form-flex'>
+                    <label htmlFor="characterName">Character's First Name</label>
+                    <input type='text' id="characterName" name='characterName' placeholder="Annie" />
+                </div>
+                <div className='form-flex'>
+                    <label htmlFor="characterEpithet">Character's Epithet</label>
+                    <input type="text" id="characterEpithet" name='characterEpithet' placeholder="the Fleeting Shadow" />
+                </div>
+            </div>
+            <h2>Dream and Mark</h2>
+            <div className='attribute-container'>
+                <div className='form-flex'>
+                    <label htmlFor="characterDream">Character's Dream</label>
+                    <textarea id="characterDream" name='characterDream' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era "></textarea>
+                </div>
+                <div className='form-flex'>
+                    <label htmlFor="characterMark">Character's Mark - This needs to be radial</label>
+                    <input type="text" id="characterMark" name='characterMark' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era " />
+                </div>
+            </div>
             
             <h2>Set Organ Values</h2>
-            <h3>Organ Points Spent: {organPointsSpent}</h3>
-            <h3>Organ Points Remaining: {organPointsMax-organPointsSpent}</h3>
-            <h3>Nerves</h3>
-            <label htmlFor='characterNerves'>Nerves Attribute Value</label>
-            <input type="number" id="characterNerves" name="characterNerves" min="0" max="3" defaultValue={0} />
-            
-            <h3>Cerebrum</h3>
-            <label htmlFor='characterCerebrum'>Cerebrum Attribute Value</label>
-            <input type="number" id="characterCerebrum" name="characterCerebrum" min="0" max="3" defaultValue={0}/>
+            <div className='attribute-container'>
+                <div className='flex column'>
+                    <h3>Organ Points Spent: {organPointsSpent}</h3>
+                    <h3>Organ Points Remaining: {organPointsMax-organPointsSpent}</h3>
+                </div>
+                <div>
+                    <div className='flex'>
+                        <div className='organ-container'>
+                            <h3>Nerves</h3>
+                            <label htmlFor='characterNerves'>Nerves Attribute Value</label>
+                            <input type="number" id="characterNerves" name="characterNerves" min="0" max="3" defaultValue={0} />
+                        </div>
+                        <div className='organ-container'>
+                            <h3>Cerebrum</h3>
+                            <label htmlFor='characterCerebrum'>Cerebrum Attribute Value</label>
+                            <input type="number" id="characterCerebrum" name="characterCerebrum" min="0" max="3" defaultValue={0}/>
+                        </div>
+                    </div>
+                    <div className='flex'>
+                        <div className='organ-container'>
+                            <h3>Heart</h3>
+                            <label htmlFor='characterHeart'>Heart Attribute Value</label>
+                            <input type="number" id="characterHeart" name="characterHeart" min="0" max="3" defaultValue={0}/>
+                        </div>
+                        <div className='organ-container'>
+                            <h3>Viscera</h3>
+                            <label htmlFor='characterViscera'>Viscera Attribute Value</label>
+                            <input type="number" id="characterViscera" name="characterViscera" min="0" max="3" defaultValue={0} />
+                        </div>
+                    </div>
+                </div>
+                
 
-            <h3>Heart</h3>
-            <label htmlFor='characterHeart'>Heart Attribute Value</label>
-            <input type="number" id="characterHeart" name="characterHeart" min="0" max="3" defaultValue={0}/>
-
-            <h3>Viscera</h3>
-            <label htmlFor='characterViscera'>Viscera Attribute Value</label>
-            <input type="number" id="characterViscera" name="characterViscera" min="0" max="3" defaultValue={0} />
+            </div>
             
             <h3>Bonds</h3>
-            <p>Bond example:</p>
-            <p>Bond Memory: "My trusty needle"</p>
-            <p>Bond Key-phrase: "there's nothing I can't mend</p>
+            <div>
+                <p>Bond example:</p>
+                <p>Bond Memory: "My trusty needle"</p>
+                <p>Bond Key-phrase: "there's nothing I can't mend</p>
 
-            <label htmlFor='charBondMemory1'>Bond Slot 1 - Memory</label>
-            <input type="textbox" id="charBondMemory1" name="charBondMemory1" />
+                <label htmlFor='charBondMemory1'>Bond Slot 1 - Memory</label>
+                <input type="textbox" id="charBondMemory1" name="charBondMemory1" />
 
-            <label htmlFor='charKeyPhrase1'>Bond Slot 1 - Key-Phrase</label>
-            <input type="textbox" id="charKeyPhrase1" name="charKeyPhrase1" />
+                <label htmlFor='charKeyPhrase1'>Bond Slot 1 - Key-Phrase</label>
+                <input type="textbox" id="charKeyPhrase1" name="charKeyPhrase1" />
 
-            <label htmlFor='charBondMemory2'>Bond Slot 2 - Memory</label>
-            <input type="textbox" id="charBondMemory2" name="charBondMemory2" />
+                <label htmlFor='charBondMemory2'>Bond Slot 2 - Memory</label>
+                <input type="textbox" id="charBondMemory2" name="charBondMemory2" />
 
-            <label htmlFor='charKeyPhrase2'>Bond Slot 2 - Key-Phrase</label>
-            <input type="textbox" id="charKeyPhrase2" name="charKeyPhrase2" />
+                <label htmlFor='charKeyPhrase2'>Bond Slot 2 - Key-Phrase</label>
+                <input type="textbox" id="charKeyPhrase2" name="charKeyPhrase2" />
 
-            <label htmlFor='charBondMemory3'>Bond Slot 3 - Memory</label>
-            <input type="textbox" id="charBondMemory3" name="charBondMemory3" />
+                <label htmlFor='charBondMemory3'>Bond Slot 3 - Memory</label>
+                <input type="textbox" id="charBondMemory3" name="charBondMemory3" />
 
-            <label htmlFor='charKeyPhrase3'>Bond Slot 3 - Key-Phrase</label>
-            <input type="textbox" id="charKeyPhrase3" name="charKeyPhrase3" />
+                <label htmlFor='charKeyPhrase3'>Bond Slot 3 - Key-Phrase</label>
+                <input type="textbox" id="charKeyPhrase3" name="charKeyPhrase3" />
+            </div>
 
             <h3>Virtues</h3>
             <label htmlFor='charVirtue1'>Virtue 1</label>
@@ -210,7 +244,7 @@ export default function SheetLoader()
 
             <p>Set Equipment</p>
        </form>
-      </>
+      </div>
 
       function handleClick()
       {
@@ -263,17 +297,14 @@ export default function SheetLoader()
             console.log(characterData)
         setMemMoriChar(characterData)
 
-        /**
-         * Might need Lodash _set to update nested properties
-         * 
-         * Idea: Set state at the top of the document with default values
-         * - create the blank character object with values represented by the initial state
-         * - when submitting the form, update all of the state values to the new values from the User's inputs
-         * - Pass the state down to the children to render on the character sheet
-         */
+        localStorage.setItem("characterExists", JSON.stringify(true))
       }
-
-      const display = navigateToSheet? sheet: characterCreatorForm
+    const display = navigateToSheet? sheet: characterCreatorForm
+    
+    function returnToForm()
+    {
+        setNavigateToSheet(false)
+    }
     return (
         <>
            {display}

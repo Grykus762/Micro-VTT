@@ -1,0 +1,57 @@
+#character-creation-form
+{
+    margin: 2rem 1rem;
+    font-family: "Montserrat", sans-serif;
+}
+.attribute-container
+{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.form-flex
+{
+    
+    margin: 0 2rem;
+    padding: 0.5rem 1rem;
+    min-width: 40%
+}
+
+.form-flex input[type=text]
+{
+    border: none;
+    width: 80%;
+    height: 1.5rem;
+}
+label
+{
+    display: block;
+}
+
+textarea
+{
+    width: 80%;
+}
+h2
+{
+    text-align: center;
+}
+
+/* Flex class exists in 2 css pages and are overriding each other */
+.flex
+{
+    display: flex;
+}
+
+.column
+{
+    flex-direction: column;
+    justify-content: center;
+}
+
+.organ-container
+{
+    margin: 0 1rem;
+}
