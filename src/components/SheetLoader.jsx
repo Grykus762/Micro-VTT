@@ -1,10 +1,25 @@
 import { useState, useEffect } from 'react'
 import Foundry_sidebar from "./Foundry_sidebar";
 import Memento_char_sheet from "./Memento_char_sheet";
+import { marks } from "../helper_functions/mementoMoriFunctions.js"
 import '../Sheetloader.css'
 
 export default function SheetLoader()
 {
+    console.log(marks)
+
+    const displayMarkInfo = marks.map(mark=> 
+        {
+            const keywords = mark.keywords.join(", ")
+            console.log(keywords)
+            return (
+            <>
+                <label>{mark.value}</label>
+                <input type='radio' id={mark.name} name="characterMark" value={mark.value} />
+                <p>Keywords: {keywords}</p>
+            </>
+            )
+        })
     /**
      * Set up a blank character object that will hold the data for a brand-new character
      */
@@ -118,6 +133,8 @@ export default function SheetLoader()
 
       const characterDataExists = JSON.parse(localStorage.getItem("characterExists"))
       console.log("Character Data Exists Boolean: ", characterDataExists)
+      const foundCharacter = JSON.parse(localStorage.getItem("character"))
+      console.log(foundCharacter)
 
       const sheet= <div id="main-container">
         <Memento_char_sheet
@@ -166,8 +183,7 @@ export default function SheetLoader()
                     <textarea id="characterDream" name='characterDream' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era "></textarea>
                 </div>
                 <div className='form-flex'>
-                    <label htmlFor="characterMark">Character's Mark - This needs to be radial</label>
-                    <input type="text" id="characterMark" name='characterMark' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era " />
+                    {displayMarkInfo}
                 </div>
             </div>
             
@@ -253,12 +269,13 @@ export default function SheetLoader()
 
       function createCharacter(formData)
       {
-        console.log("submitted")
-        console.log(formData)
-    
+        console.log(formData)  
         const charNameForm = formData.get("characterName")
         const charEpithetForm = formData.get("characterEpithet")
+        
         const charDreamForm = formData.get("characterDream")
+        const charMarkForm = formData.get("characterMark")
+
         const charNervesForm = formData.get("characterNerves")
         const charCerebrumForm = formData.get("characterCerebrum")
         const charHeartForm = formData.get("characterHeart")
@@ -268,6 +285,7 @@ export default function SheetLoader()
         characterData.name.name = charNameForm
         characterData.name.epithet = charEpithetForm
         characterData.dream = charDreamForm
+        characterData.mark.name = charMarkForm
         //loop through organs
         characterData.organs.forEach(data=>
             {
@@ -298,6 +316,9 @@ export default function SheetLoader()
         setMemMoriChar(characterData)
 
         localStorage.setItem("characterExists", JSON.stringify(true))
+        const charName = characterData.name.name + " " + characterData.name.epithet
+        console.log(charName)
+        localStorage.setItem("character", JSON.stringify(characterData))
       }
     const display = navigateToSheet? sheet: characterCreatorForm
     
