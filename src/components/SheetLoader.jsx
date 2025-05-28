@@ -13,11 +13,15 @@ export default function SheetLoader()
             const keywords = mark.keywords.join(", ")
             console.log(keywords)
             return (
-            <>
-                <label>{mark.value}</label>
+            <div className='marks-container'>
                 <input type='radio' id={mark.name} name="characterMark" value={mark.value} />
-                <p>Keywords: {keywords}</p>
-            </>
+                <div className='marks-info'>
+                    <label htmlFor={mark.name}>{mark.value}
+                        <p><strong>Keywords:</strong> {keywords}</p>
+                    </label>
+                </div>
+                
+            </div>
             )
         })
     /**
@@ -169,19 +173,22 @@ export default function SheetLoader()
             <div className='attribute-container'>
                 <div className='form-flex'>
                     <label htmlFor="characterName">Character's First Name</label>
-                    <input type='text' id="characterName" name='characterName' placeholder="Annie" />
+                    <input type='text' id="characterName" name='characterName' placeholder="Annie" defaultValue='Annie' />
                 </div>
                 <div className='form-flex'>
                     <label htmlFor="characterEpithet">Character's Epithet</label>
-                    <input type="text" id="characterEpithet" name='characterEpithet' placeholder="the Fleeting Shadow" />
+                    <input type="text" id="characterEpithet" name='characterEpithet' placeholder="the Fleeting Shadow" defaultValue='the Fleeting Shadow' />
                 </div>
             </div>
-            <h2>Dream and Mark</h2>
+            <h2>Character's Dream</h2>
             <div className='attribute-container'>
                 <div className='form-flex'>
                     <label htmlFor="characterDream">Character's Dream</label>
-                    <textarea id="characterDream" name='characterDream' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era "></textarea>
+                    <textarea id="characterDream" name='characterDream' placeholder="Becoming a knight, curing my sick daughter, composing the greatest ballad of my era " defaultValue="Become a knight"></textarea>
                 </div>
+            </div>
+            <h2>Character's Mark</h2>
+            <div className='attribute-container'>
                 <div className='form-flex'>
                     {displayMarkInfo}
                 </div>
@@ -198,19 +205,19 @@ export default function SheetLoader()
                         <div className='organ-container'>
                             <h3>Nerves</h3>
                             <label htmlFor='characterNerves'>Nerves Attribute Value</label>
-                            <input type="number" id="characterNerves" name="characterNerves" min="0" max="3" defaultValue={0} />
+                            <input type="number" id="characterNerves" name="characterNerves" min="0" max="3" defaultValue={1} />
                         </div>
                         <div className='organ-container'>
                             <h3>Cerebrum</h3>
                             <label htmlFor='characterCerebrum'>Cerebrum Attribute Value</label>
-                            <input type="number" id="characterCerebrum" name="characterCerebrum" min="0" max="3" defaultValue={0}/>
+                            <input type="number" id="characterCerebrum" name="characterCerebrum" min="0" max="3" defaultValue={1}/>
                         </div>
                     </div>
                     <div className='flex'>
                         <div className='organ-container'>
                             <h3>Heart</h3>
                             <label htmlFor='characterHeart'>Heart Attribute Value</label>
-                            <input type="number" id="characterHeart" name="characterHeart" min="0" max="3" defaultValue={0}/>
+                            <input type="number" id="characterHeart" name="characterHeart" min="0" max="3" defaultValue={1}/>
                         </div>
                         <div className='organ-container'>
                             <h3>Viscera</h3>
@@ -230,10 +237,10 @@ export default function SheetLoader()
                 <p>Bond Key-phrase: "there's nothing I can't mend</p>
 
                 <label htmlFor='charBondMemory1'>Bond Slot 1 - Memory</label>
-                <input type="textbox" id="charBondMemory1" name="charBondMemory1" />
+                <input type="textbox" id="charBondMemory1" name="charBondMemory1" defaultValue='My trusty needle' />
 
                 <label htmlFor='charKeyPhrase1'>Bond Slot 1 - Key-Phrase</label>
-                <input type="textbox" id="charKeyPhrase1" name="charKeyPhrase1" />
+                <input type="textbox" id="charKeyPhrase1" name="charKeyPhrase1" defaultValue="Nothing I can't mend" />
 
                 <label htmlFor='charBondMemory2'>Bond Slot 2 - Memory</label>
                 <input type="textbox" id="charBondMemory2" name="charBondMemory2" />
@@ -316,9 +323,11 @@ export default function SheetLoader()
         setMemMoriChar(characterData)
 
         localStorage.setItem("characterExists", JSON.stringify(true))
-        const charName = characterData.name.name + " " + characterData.name.epithet
+        const charName = charNameForm + " " + charEpithetForm
         console.log(charName)
         localStorage.setItem("character", JSON.stringify(characterData))
+
+        characterData.name.name =charName
       }
     const display = navigateToSheet? sheet: characterCreatorForm
     
