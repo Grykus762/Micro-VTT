@@ -1,9 +1,13 @@
 import './App.css'
-import SheetLoader from './components/SheetLoader'
+import Foundry_sidebar from "./components/Foundry_sidebar";
+import Memento_char_sheet from "./components/Memento_char_sheet";
 
 function App() {
   return (
-    <SheetLoader />
+    <div id='main-container'>
+      <Memento_char_sheet />
+      <Foundry_sidebar />
+    </div>
   )
 }
 

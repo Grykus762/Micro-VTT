@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 import Foundry_sidebar from "./Foundry_sidebar";
 import Memento_char_sheet from "./Memento_char_sheet";
-import { marks } from "../helper_functions/mementoMoriFunctions.js"
+import { marks, blankCharacter } from "../helper_functions/mementoMoriHelpers.js"
 import '../Sheetloader.css'
 
 export default function SheetLoader()
 {
-    console.log(marks)
-
     const displayMarkInfo = marks.map(mark=> 
         {
             const keywords = mark.keywords.join(", ")
@@ -24,114 +22,7 @@ export default function SheetLoader()
             </div>
             )
         })
-    /**
-     * Set up a blank character object that will hold the data for a brand-new character
-     */
-    const blankCharacter =  {
-        "name": {
-            "name": "Name",
-            "epithet": "Epithet has not been set",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-        },
-        "giftName": {
-            "description": "This Gift has not been unlocked yet",
-            "progress": 0
-        },
-        "blood": {
-            "slots": 2,
-            "maxSlots": 3,
-            "corrupted": 1
-        },
-        "organs":[
-            {
-                "organName": "Nerve",
-                "slots": 1,
-                "corruption": 0,
-                "description":"Instinct above all"
-            },
-            {
-                "organName": "Cerebrum",
-                "slots": 1,
-                "corruption": 0,
-                "description": "Reason at any cost"
-            },
-            {
-                "organName": "Heart",
-                "slots": 1,
-                "corruption": 0,
-                "description": "A life devoted to others"
-            },
-            {
-                "organName": "Viscera",
-                "slots": 1,
-                "corruption": 0,
-                "description": "A life of self-interest"
-            },           
-        ],
-        "stigmata":
-        {
-            "charges": 0,
-            "description": "You have not unlocked a Stigmata yet",
-        },
-        "equipment": "Your equipment has not been set",
-        "dream": "Your ambition has not been set",
-        "mark": {
-            "name": "You do not show any signs of the curse",
-            "keywords": "The Keywords of your mark have not been set yet"
-        },
-        "bonds":[
-            {"memory": "This memory has not been set",
-            "phrase": "First you need a memory",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-            },
-            {"memory": "This memory has not been set",
-            "phrase": "First you need a memory",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-            },
-            {"memory": "This memory has not been set",
-            "phrase": "First you need a memory",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-            }
-        ],
-        "giftBonds":
-        {
-            "description": "This Gift has not been unlocked yet",
-            "progress": 0
-        },
-        "virtues":[{
-            "description": "This virtue has not been assigned yet",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-        },
-        {
-            "description": "This virtue has not been assigned yet",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-        },
-        {
-            "description": "This virtue has not been assigned yet",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-        }],
-        "giftVirtues":
-        {
-            "description": "This Gift has not been unlocked yet",
-            "slots": 2,
-            "maxSlots": 2,
-            "corrupted": 0
-        },
-      }
+    
       const [memMoriChar, setMemMoriChar] = useState(blankCharacter)
       const [navigateToSheet, setNavigateToSheet] = useState(false)
 
@@ -143,6 +34,7 @@ export default function SheetLoader()
       const sheet= <div id="main-container">
         <Memento_char_sheet
         name={memMoriChar.name}
+        epithet={memMoriChar.epithet}
         giftName={memMoriChar.giftName}
         organs={memMoriChar.organs}
         blood = {memMoriChar.blood}
@@ -166,7 +58,6 @@ export default function SheetLoader()
       const startingOrganSlots = 1
       let organPointsSpent = 0
       const characterCreatorForm = <div id='character-creation-form'>
-       <button onClick={()=>handleClick()}>Display Sheet</button>
        <form action={createCharacter}>
             <input type="submit" value="Save Character Data"/>
             <h2>Character Name Information</h2>
@@ -319,7 +210,7 @@ export default function SheetLoader()
                     data.slots = (charVisceraValue + startingOrganSlots)
                 }
             })
-            console.log(characterData)
+
         setMemMoriChar(characterData)
 
         localStorage.setItem("characterExists", JSON.stringify(true))
