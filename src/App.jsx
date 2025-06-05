@@ -4,10 +4,9 @@ import Memento_char_sheet from "./components/Memento_char_sheet";
 
 function App() {
   return (
-    <div id='main-container'>
-      <Memento_char_sheet />
-      <Foundry_sidebar />
-    </div>
+    <>
+        <Memento_char_sheet />
+    </>
   )
 }
 
