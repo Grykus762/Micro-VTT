@@ -1,11 +1,18 @@
 import './App.css'
 import Foundry_sidebar from "./components/Foundry_sidebar";
 import Memento_char_sheet from "./components/Memento_char_sheet";
-
+import SystemLoader from './components/SystemLoader';
+import {BrowserRouter, Routes, Route } from 'react-router';
 function App() {
   return (
     <>
-        <Memento_char_sheet />
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<SystemLoader />} />
+
+    </Routes>
+      {/* Replace Memento Mori Character Sheet with System Selector Page */}
+    </BrowserRouter>
     </>
   )
 }

@@ -17,15 +17,12 @@ import progressDiamond from "../assets/VTT/Progress_Diamond.svg"
 /**
  * Helper Imports
  */
-import { marks, blankCharacter, displaySlots } from "../helper_functions/mementoMoriHelpers.js"
+import { marks, blankCharacter } from "../helper_functions/mementoMoriHelpers.js"
 /**
  * Component Imports
  */
 import Memento_Char_Header from './memento_mori_components/Memento_Char_Header.jsx'
 import Organ_Attribute from "./memento_mori_components/Organ_Attribute.jsx"
-
-
-
 
 export default function Memento_char_sheet(character)
 {
@@ -74,6 +71,53 @@ export default function Memento_char_sheet(character)
     {
         console.log("Roll Dice!")
     }
+
+    function displaySlots(corruptedSlots, filledSlots, maximumSlots = 3)
+    {
+        /**
+         * 
+         * I need to display a number of filled slots, or corrupted slots based on the imported values.
+         * 
+         * Organs can have a maximum of three filled slots. Unlike blood, organs can have unfilled slots that are determined by character creation. Blood slots must ALWAYS have a minimum of 1 corrupted slots, and will never have all three slots corrupted. When the third slot is corrupted, the corruption gets reset back to 1 corruption slot, and the player gets corruption in either their name, bonds, virtues, or organs
+         * @param {integer} corruptedSlots - The number of slots that have been corrupted
+         * @param {integer} filledSlots - The number of active and filled slots the character has
+         * @const {number} maxSlots - The maximum number of slots allowed on an organ. This value is always 3
+         * @returns {jsx}  JSX displaying HTML for the correct number of corrupted  and uncorrupted blood slots
+         * 
+         * Steps
+         * - Given the number of corrupted slots, first generate the number of corrupt slots to be displayed
+         * - calculate the remaining number of slots that are filled but uncorrupted and generate the images for those slots
+         * For all other slots, show an image of an unfilled slot
+         */
+        
+        const maxSlots = maximumSlots
+        const emptySlots = maxSlots - corruptedSlots - filledSlots
+        if(emptySlots < 0)
+        {
+            console.error("An error ocurred. The number of slots cannot be below zero")
+        }
+
+        let slots = []
+        for (let i =1; i<=corruptedSlots;i++)
+        {
+            slots.push(<img className="img-slot-icon" src={corruptedSlot} />)
+        }
+
+        for (let i=1; i<=filledSlots;i++)
+        {
+            slots.push(<img className="img-slot-icon" src={filledSlot} />)
+        }
+
+        if(emptySlots)
+        {
+            for (let i=1; i<=emptySlots; i++)
+            {
+                slots.push(<img className="img-slot-icon" src={unfilledSlot} />)
+            }
+        }
+        return slots
+    }
+
 
 return (
     <>
